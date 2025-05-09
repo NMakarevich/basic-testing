@@ -10,10 +10,10 @@ describe('throttledGetDataFromApi', () => {
 
   test('should create instance with provided base url', async () => {
     const createSpy = jest.spyOn(axios, 'create');
-    jest.mock('axios', () => ({
-      get: jest.fn(),
-    }));
+
+    jest.useFakeTimers();
     await throttledGetDataFromApi(relativePath);
+    jest.runAllTimers();
 
     expect(createSpy).toHaveBeenCalledWith({
       baseURL: 'https://jsonplaceholder.typicode.com',
